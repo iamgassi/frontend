@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import {Link } from 'react-router-dom'
 import {Form ,Button} from 'react-bootstrap'
+import Spinner from 'react-bootstrap/Spinner';
 import '../App.css'
 
 
@@ -11,10 +12,22 @@ const Register = () => {
   const [name,setName]=useState("")
   const [repeatPass,setRepeatPass]=useState("")
 
+  const[err,SetErr]=useState("");
+  const[isLoading,setIsloading]=useState(false)
+
 
 const handleSubmit=async function(e){
   e.preventDefault();
-  await saveToServer();
+  setIsloading(true)
+  try{
+    await saveToServer();
+    SetErr("User Registered")
+    setIsloading(false)
+  }catch(err){
+     console.log(err)
+    SetErr("Failed to Register")
+    setIsloading(false)
+  }
   setEmail("")
   setPassword("")
   setName("")
@@ -29,14 +42,18 @@ const handleSubmit=async function(e){
       password:password,
       repeatPass:repeatPass
      }
-    return fetch("http://localhost:8000/register",{
-      method:"POST",
-      body:JSON.stringify(data),
-      headers:{
-        "Content-Type":"application/json",
-     }
-    })
+     return(
+      fetch("http://localhost:8000/register",{
+        method:"POST",
+        body:JSON.stringify(data),
+        headers:{
+          "Content-Type":"application/json",
+       }
+      }
+      )
+
    
+     )
   }
 
   return (
@@ -79,12 +96,25 @@ const handleSubmit=async function(e){
         
        <Button variant="primary mb-3"type='submit' >Submit</Button>
     </Form>
+
+ 
+    
      
 
     <Link to="/home">
-     <Button  variant="dark" >Home</Button>
+     <Button  variant="dark mb-3" >Home</Button>
      </Link>
-     
+
+
+    
+      <h4 > {isLoading}
+      {isLoading?( 
+      <Spinner animation="border" role="status">
+      <span className="visually-hidden"></span>
+    </Spinner>):(
+      err
+    )}
+       </h4>
 
    
 </div>

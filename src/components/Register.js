@@ -28,10 +28,16 @@ const handleSubmit=async function(e){
     SetErr("Failed to Register")
     setIsloading(false)
   }
+
+  setTimeout(() => {
+    SetErr("")
+  }, 3000);
+
   setEmail("")
   setPassword("")
   setName("")
   setRepeatPass("")
+  
   } 
 
   function saveToServer()
@@ -51,10 +57,9 @@ const handleSubmit=async function(e){
        }
       }
       )
+     )}
 
-   
-     )
-  }
+    
 
   return (
     <div >
@@ -97,20 +102,15 @@ const handleSubmit=async function(e){
        <Button variant="primary mb-3"type='submit' >Submit</Button>
     </Form>
 
- 
-    
-     
-
     <Link to="/home">
      <Button  variant="dark mb-3" >Home</Button>
      </Link>
 
-
-    
+  
       <h4 > {isLoading}
       {isLoading?( 
       <Spinner animation="border" role="status">
-      <span className="visually-hidden"></span>
+      <span className="visually-hidden">Loading</span>
     </Spinner>):(
       err
     )}

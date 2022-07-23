@@ -13,6 +13,7 @@ const Login = () => {
 
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
+    const [fetchData,setFetchData]=useState({});
 
     useEffect(function(){
       fetch("http://localhost:8000/user")
@@ -22,6 +23,7 @@ const Login = () => {
         })
          .then(function(data){
            console.log(data);
+           setFetchData(data);
         })
          .catch(function(err){
            console.log(err);
@@ -29,20 +31,18 @@ const Login = () => {
      },[]);
 
     const dispatch=useDispatch();
-
+    // for(let i=0;i<fetchData.length;i++)
+    // {
+    //     console.log(fetchData[i].email)
+    // }
     const handleSubmit=async function(e){
        e.preventDefault();
-       await saveToServer();
+       await verifyFromServer();
        setEmail("")
        setPassword("")
-      //  dispatch(login({
-      //   email:email,
-      //   password:password,
-      //   loggedIn:true
-      //  }))
       } 
 
-    function saveToServer()
+    function verifyFromServer()
     {
       let data={
         email:email,

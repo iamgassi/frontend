@@ -2,23 +2,25 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import style from '../components/Style.module.css'
 import '../App.css'
-
+import {Row, Col, Button} from "react-bootstrap"
 
 const Home = () => {
   return (
-    <div className={style.box} >
-        <div className={style.inputData}>
-      <Link to="/login">
-            <button  >Login</button>
+    <div>
+    <div className={style.inputData}>
+      <Row>
+        <Col >
+       <Link to="/login">
+     <Button variant="outline-success">Login</Button>
       </Link>  
+        </Col>
+        <Col>
        <Link to="/register">
-             <button>Register</button>
+             <Button variant="outline-secondary">Register</Button>
        </Link>
+        </Col>
+       </Row>
        </div>
-
-       <div className='wave -one'></div>
-   <div className='wave -two'></div>
-   <div className='wave -three'></div>
 
     </div>
   )

@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import {Link } from 'react-router-dom'
-import style from '../components/Style.module.css'
+import {Form ,Button} from 'react-bootstrap'
 import '../App.css'
+
 
 const Register = () => {
 
@@ -39,11 +40,11 @@ const handleSubmit=async function(e){
   }
 
   return (
-    <div className={style.box}>
-    <form onSubmit={(e)=>handleSubmit(e)}>
+    <div >
+    <Form onSubmit={(e)=>handleSubmit(e)}>
         <h1>Register here </h1>
 
-        <input type="email"
+        <Form.Control type="email"
         placeholder='Email'
         value={email}
         onChange={(e)=>{
@@ -51,7 +52,7 @@ const handleSubmit=async function(e){
         }}
          required={true}  
           />
-        <input type="text"
+        <Form.Control type="text"
         placeholder='Name'
         value={name}
         onChange={(e)=>{
@@ -59,7 +60,7 @@ const handleSubmit=async function(e){
         }}
          required={true}  
           />
-        <input type="password" 
+        <Form.Control type="password" 
         placeholder='Password' 
         value={password}
         onChange={(e)=>{
@@ -67,7 +68,7 @@ const handleSubmit=async function(e){
         }}
          required={true} 
         />
-         <input type="text"
+         <Form.Control type="text"
         placeholder='Confirm Password'
         value={repeatPass}
         onChange={(e)=>{
@@ -76,16 +77,16 @@ const handleSubmit=async function(e){
          required={true}  
           />
         
-       <button type='submit' >Submit</button>
-    </form>
+       <Button variant="primary mb-3"type='submit' >Submit</Button>
+    </Form>
+     
 
     <Link to="/home">
-     <button >Home</button>
+     <Button  variant="dark" >Home</Button>
      </Link>
+     
 
-     <div className='wave -one'></div>
-   <div className='wave -two'></div>
-   <div className='wave -three'></div>
+   
 </div>
   )
 }

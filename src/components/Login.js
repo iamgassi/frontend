@@ -5,6 +5,9 @@ import { selectUser } from './features/userSlice'
 import { useSelector } from 'react-redux'
 import Logout from './Logout'
 import {Link} from 'react-router-dom'
+import { Button, Card, Form } from 'react-bootstrap';
+
+
 
 const Login = () => {
 
@@ -66,10 +69,10 @@ const Login = () => {
       <Logout/>
     ):(
       <>
-      <form onSubmit={(e)=>handleSubmit(e)}>
+      <Form onSubmit={(e)=>handleSubmit(e)}>
       <h1>Login here </h1>
 
-      <input type="email"
+      <Form.Control type="email"
       placeholder='Email'
       value={email}
       onChange={(e)=>{
@@ -77,7 +80,7 @@ const Login = () => {
       }}  
       required={true}
         />
-      <input type="password" 
+      <Form.Control type="password" 
       placeholder='password' 
       value={password}
       onChange={(e)=>{
@@ -85,10 +88,10 @@ const Login = () => {
       }} 
       required={true}
       />
-     <button type='submit' >Submit</button>
-  </form>
+     <Button variant="primary mb-3" type='submit' >Submit</Button>
+  </Form>
      <Link to="/home">
-     <button >Home</button>
+     <Button variant="dark" >Home</Button>
      </Link>
   </>
     )}

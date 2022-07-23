@@ -5,6 +5,8 @@ import Logout from './components/Logout';
 import Register from './components/Register'
 import Home from './components/Home'
 import {Routes,Route} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
 

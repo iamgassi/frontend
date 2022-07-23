@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux/es/exports';
 import { logout, selectUser } from './features/userSlice';
+import { Button } from 'react-bootstrap';
 
 const Logout = () => {
     const user=useSelector(selectUser)
@@ -18,7 +19,7 @@ const Logout = () => {
      <h1>
         Welcome <span>{user.email}</span>
      </h1>
-      <button onClick={(e)=>handleLogout(e)}>Logout</button>
+      <Button variant="danger mb-3" onClick={(e)=>handleLogout(e)}>Logout</Button>
     </>
   )
 }

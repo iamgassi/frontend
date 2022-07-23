@@ -17,7 +17,7 @@ const Logout = () => {
   return (
     <>
      <h1>
-        Welcome <span>{user.email}</span>
+        Welcome <span>{user.username}</span>
      </h1>
       <Button variant="danger mb-3" onClick={(e)=>handleLogout(e)}>Logout</Button>
     </>

@@ -5,7 +5,8 @@ import { selectUser } from './features/userSlice'
 import { useSelector } from 'react-redux'
 import Logout from './Logout'
 import {Link} from 'react-router-dom'
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 
@@ -13,7 +14,10 @@ const Login = () => {
 
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
+
     const [fetchData,setFetchData]=useState({});
+    const[err,SetErr]=useState("");
+    const[isLoading,setIsloading]=useState(false)
 
     useEffect(function(){
       fetch("http://localhost:8000/user")
@@ -26,45 +30,73 @@ const Login = () => {
            setFetchData(data);
         })
          .catch(function(err){
+        
            console.log(err);
         });
      },[]);
 
     const dispatch=useDispatch();
-    // for(let i=0;i<fetchData.length;i++)
-    // {
-    //     console.log(fetchData[i].email)
-    // }
     const handleSubmit=async function(e){
        e.preventDefault();
-       await verifyFromServer();
+       setIsloading(true)
+
+       try{
+        await verifyFromServer();
+        setIsloading(false)
+      }catch(err){
+         console.log(err)
+        SetErr("Failed to Login")
+        setIsloading(false)
+      }
+    
+      setTimeout(() => {
+        SetErr("")
+      }, 3000);
+      
+
        setEmail("")
        setPassword("")
       } 
 
     function verifyFromServer()
-    {
-      let data={
-        email:email,
-        password:password
+    {       
+        for(let i=0;i<fetchData.length;i++)
+       {
+       let serverMail=fetchData[i].email
+        console.log(serverMail)
+        if(email===serverMail  )
+              { 
+                if(fetchData[i].password===password)
+                      {
+                        
+                        dispatch(login({
+                          email:serverMail,
+                          username:fetchData[i].username,
+                          loggedIn:true
+                        }))
+                      }
+                else
+                    {
+                     
+                      SetErr("Incorrect Password")
+                    }
+
+              }
+        else{
+           continue
+        }
        }
-       dispatch(login({
-        email:email,
-        password:password,
-        loggedIn:true
-       }))
-      return fetch("http://localhost:8000/user",{
-        method:"POST",
-        body:JSON.stringify({user:data}),
-        headers:{
-          "Content-Type":"application/json",
-       }
-      })
+      
+       SetErr("Something Wrong!")
+     
      
     }
     const user=useSelector(selectUser);
+
+ 
   return (
     <>
+    
     {user?(   
       <Logout/>
     ):(
@@ -93,6 +125,16 @@ const Login = () => {
      <Link to="/home">
      <Button variant="dark" >Home</Button>
      </Link>
+
+     <h4 >
+      {isLoading?( 
+      <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading</span>
+    </Spinner>):(
+      err
+    )}
+       </h4>
+
   </>
     )}
     </>
